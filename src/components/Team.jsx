@@ -10,6 +10,7 @@ const initialTeamMembers = [
     email: 'sarah@example.com',
     phone: '+1 (555) 123-4567',
     department: 'Design',
+    skills: ['UI Design', 'UX Design', 'Figma', 'User Research', 'Prototyping'],
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
   },
   { 
@@ -19,6 +20,7 @@ const initialTeamMembers = [
     email: 'mike@example.com',
     phone: '+1 (555) 234-5678',
     department: 'Engineering',
+    skills: ['JavaScript', 'React', 'TypeScript', 'CSS', 'HTML', 'Tailwind CSS', 'Redux'],
     avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
   },
   { 
@@ -28,6 +30,7 @@ const initialTeamMembers = [
     email: 'alex@example.com',
     phone: '+1 (555) 345-6789',
     department: 'Engineering',
+    skills: ['Node.js', 'Express', 'MongoDB', 'PostgreSQL', 'Python', 'Docker', 'AWS'],
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
   },
   { 
@@ -37,6 +40,7 @@ const initialTeamMembers = [
     email: 'tom@example.com',
     phone: '+1 (555) 456-7890',
     department: 'Management',
+    skills: ['Project Management', 'Agile', 'Scrum', 'Risk Management', 'Team Leadership', 'Stakeholder Management'],
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
   }
 ];
@@ -53,6 +57,7 @@ function Team() {
     email: '',
     phone: '',
     department: '',
+    skills: [], // Ensure skills are initialized as empty array
     avatar: ''
   });
 
@@ -70,6 +75,7 @@ function Team() {
       email: '',
       phone: '',
       department: '',
+      skills: [],
       avatar: ''
     });
   };
@@ -98,6 +104,11 @@ function Team() {
   const openDeleteModal = (member) => {
     setSelectedMember(member);
     setIsDeleteModalOpen(true);
+  };
+
+  const handleSkillsChange = (e) => {
+    const skills = e.target.value.split(',').map(skill => skill.trim()).filter(skill => skill);
+    setFormData({ ...formData, skills });
   };
 
   const MemberForm = ({ onSubmit, submitText }) => (
@@ -163,12 +174,15 @@ function Team() {
       </div>
 
       <div>
-        <label htmlFor="avatar" className="block text-sm font-medium text-gray-700">Avatar URL</label>
+        <label htmlFor="skills" className="block text-sm font-medium text-gray-700">
+          Skills (comma-separated)
+        </label>
         <input
-          type="url"
-          id="avatar"
-          value={formData.avatar}
-          onChange={(e) => setFormData({ ...formData, avatar: e.target.value })}
+          type="text"
+          id="skills"
+          value={formData.skills.join(', ')}
+          onChange={handleSkillsChange}
+          placeholder="e.g. JavaScript, React, UI Design"
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
           required
         />
@@ -251,6 +265,19 @@ function Team() {
               <div className="flex items-center text-sm text-gray-500">
                 <Building className="h-4 w-4 mr-2" />
                 {member.department}
+              </div>
+              <div className="mt-3">
+                <h4 className="text-sm font-medium text-gray-700">Skills</h4>
+                <div className="mt-1 flex flex-wrap gap-2">
+                  {member.skills.map((skill, index) => (
+                    <span
+                      key={index}
+                      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

@@ -6,7 +6,6 @@ const navigation = [
   { name: 'Dashboard', icon: Home },
   { name: 'Projects', icon: Star },
   { name: 'Team', icon: Users },
-  { name: 'Calendar', icon: Calendar },
   { name: 'Reports', icon: BarChart2 },
   { name: 'Archive', icon: Archive },
 ];
